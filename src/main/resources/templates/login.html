@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentCare Connect - Patient Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f4ff 0%, #ffffff 100%);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-image {
+            background: linear-gradient(rgba(41, 128, 185, 0.9), rgba(41, 128, 185, 0.9)),
+            url('/api/placeholder/400/320');
+            padding: 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form {
+            padding: 40px;
+        }
+
+        .brand-icon {
+            font-size: 40px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 2px #2980b9;
+            background-color: white;
+        }
+
+        .btn-login {
+            background: #2980b9;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: #2573a7;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list i {
+            margin-right: 10px;
+        }
+
+        .links-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert {
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .login-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-image {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container login-container">
+    <div class="login-grid">
+        <div class="login-image">
+            <div>
+                <i class="fas fa-tooth brand-icon"></i>
+                <h2>Welcome to DentCare Connect</h2>
+                <p class="mb-4">Your trusted platform for dental care management</p>
+
+                <ul class="features-list">
+                    <li><i class="fas fa-calendar-check"></i> Easy appointment scheduling</li>
+                    <li><i class="fas fa-history"></i> View treatment history</li>
+                    <li><i class="fas fa-comment-medical"></i> Direct communication with dentists</li>
+                    <li><i class="fas fa-bell"></i> Appointment reminders</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="login-form">
+            <div th:if="${param.error}" class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> Invalid email or password
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                <i class="fas fa-check-circle"></i> You have been logged out successfully
+            </div>
+
+            <h3 class="mb-4">Patient Login</h3>
+            <form method="post" role="form" th:action="@{/login}">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="username" name="username"
+                               placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+
+                <div class="links-section">
+                    <a th:href="@{/register}" class="text-decoration-none">
+                        <i class="fas fa-user-plus"></i> New Patient? Register
+                    </a>
+                    <a th:href="@{/forgot-password}" class="text-decoration-none">
+                        <i class="fas fa-key"></i> Forgot Password?
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
